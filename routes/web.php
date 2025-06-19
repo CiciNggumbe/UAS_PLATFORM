@@ -117,3 +117,9 @@ Route::get('/register', function () {
     return view('register');
 });
 
+<<<<<<< HEAD
+=======
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});
+>>>>>>> 2a01268652fb959a76221ec7632b3410c8560a63
