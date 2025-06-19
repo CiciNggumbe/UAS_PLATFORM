@@ -102,7 +102,8 @@
             <button type="submit" class="btn-login">LOGIN</button>
         </form>
 
-        <a href="#" class="link-register">Don't have an account? Register here</a>
+        <a href="{{ url('/register') }}" class="link-register">Don't have an account? Register here</a>
+
     </div>
 </body>
 </html>

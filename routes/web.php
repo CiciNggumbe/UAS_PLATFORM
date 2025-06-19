@@ -112,3 +112,11 @@ Route::middleware('web')->group(function () {
         return view('user.riwayat_peminjaman', compact('riwayat'));
     })->name('riwayat.peminjaman');
 });
+
+Route::get('/register', function () {
+    return view('register');
+});
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});

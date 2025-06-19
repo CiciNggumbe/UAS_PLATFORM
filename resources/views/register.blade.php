@@ -66,6 +66,17 @@
         .btn-register:hover {
             background-color: #e67e22;
         }
+        .link-register {
+    margin-top: 15px;
+    display: block;
+    font-size: 14px;
+    color: #c44b0a;
+    text-decoration: none;
+}
+
+.link-register:hover {
+    text-decoration: underline;
+}
     </style>
 </head>
 <body>
@@ -83,6 +94,7 @@
             <input type="password" placeholder="Password" required>
             <button type="submit" class="btn-register">REGISTER</button>
         </form>
+        <a href="{{ url('/login') }}" class="link-register">Already have an account? Login here</a>
     </div>
 </body>
 </html>
