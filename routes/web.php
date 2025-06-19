@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use App\Models\Peminjaman;
-use App\Http\Controllers\PeminjamanController;
+use App\Models\Borrowing;
+use App\Http\Controllers\BorrowingController;
 
 // ================= WELCOME ================= //
 Route::get('/', function () {
@@ -30,7 +30,7 @@ Route::post('/login', function (Request $request) {
     if ($username === 'user' && $password === 'user_p4ss') {
         Session::put('username', $username);
         Session::put('role', 'user');
-        return redirect()->route('dashboard.user');
+        return redirect()->route('user.dashboard');
     }
 
     return redirect()->route('login')->with('error', 'Invalid credentials.');
@@ -95,8 +95,8 @@ Route::middleware('web')->group(function () {
         if (Session::get('role') !== 'user') {
             return redirect()->route('login');
         }
-        return view('user.dashboard_user');
-    })->name('dashboard.user');
+        return view('user.dashboard');
+    })->name('user.dashboard');
 
     Route::get('/riwayat-peminjaman', function () {
         if (Session::get('role') !== 'user') {
@@ -117,7 +117,30 @@ Route::get('/register', function () {
     return view('register');
 });
 
+Route::get('/products', function () {
+   return view('user.products');
+});
 
-Route::get('/dashboard', function () {
-   return view('user.dashboard');
+Route::get('/history', function () {
+   return view('user.history');
+});
+
+Route::get('/borrowing', function () {
+   return view('user.borrowing');
+});
+
+Route::get('/return', function () {
+   return view('user.return');
+});
+
+Route::get('/logout', function () {
+   return view('user.logout');
+});
+
+Route::get('/profile', function () {
+   return view('user.profile');
+});
+
+Route::get('/settings', function () {
+   return view('user.settings');
 });

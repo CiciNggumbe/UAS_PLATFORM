@@ -9,11 +9,12 @@
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: #fde3c4;
+      background: #fde3c4; /* GANTI WARNA INI */
       color: #333;
     }.container {
       display: flex;
     }
+/* SIDEBAR */
     .sidebar {
       width: 220px;
       background-color: #f38c35;
@@ -350,12 +351,17 @@ transition: transform 0.3s ease, box-shadow 0.3s ease;
       <h2>PuspaNada<br>Online Instrument<br>Rental Service</h2>
       <a href="/dashboard" class="active">Home</a>
       <a href="/products">Products</a>
-      <a href="/payout">Payout</a>
+      <a href="/history">History</a>
+      <a href="/borrowing.">Borrowing</a>
+      <a href="/return">Return</a>
       <a href="/profile">Profile</a>
       <a href="/settings">Settings</a>
       <a href="/logout">Log Out</a>
     </div>
+    <!-- Main Content -->
     <div class="main-content">
+      <!-- Navbar and Welcome Combined -->
+      <!-- Navbar and Welcome Combined -->
 <div class="navbar">
   <div class="welcome-text">
     <h1>Welcome Back, Ambatu! 👋</h1>
@@ -373,6 +379,8 @@ transition: transform 0.3s ease, box-shadow 0.3s ease;
     </div>
   </a>
 </div>
+
+    <!-- Notifikasi kedua -->
 <div class="icon-button" id="notif-btn">
   <svg viewBox="0 0 24 24">
     <path d="M12 2a6 6 0 00-6 6v3.5L4.3 14a1 1 0 00.7 1.7h14a1 1 0 00.7-1.7L18 11.5V8a6 6 0 00-6-6zm0 20a2 2 0 002-2h-4a2 2 0 002 2z"/>
@@ -385,6 +393,7 @@ transition: transform 0.3s ease, box-shadow 0.3s ease;
   <div style="padding: 10px;">🎻 New instrument added: Cello</div>
 </div>
 
+    <!-- Search ketiga -->
 <div class="icon-button" id="search-btn">
   <svg viewBox="0 0 24 24">
     <path d="M10 2a8 8 0 105.3 14.3l5.4 5.4 1.4-1.4-5.4-5.4A8 8 0 0010 2zm0 2a6 6 0 110 12A6 6 0 0110 4z"/>
