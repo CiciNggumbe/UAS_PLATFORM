@@ -86,14 +86,16 @@
             <div class="title">PuspaNada</div>
         </div>
 
-        <form>
-            <input type="text" placeholder="Username" required>
-            <input type="text" placeholder="Address" required>
-            <input type="email" placeholder="E-mail" required>
-            <input type="text" placeholder="Birthplace" required>
-            <input type="password" placeholder="Password" required>
-            <button type="submit" class="btn-register">REGISTER</button>
-        </form>
+       <form method="POST" action="{{ route('register.store') }}">
+  @csrf
+  <input type="text" name="name" placeholder="Full Name" required>
+  <input type="text" name="address" placeholder="Address" required>
+  <input type="email" name="email" placeholder="Email" required>
+  <input type="text" name="birthplace" placeholder="Place of Birth" required>
+  <input type="password" name="password" placeholder="Password" required>
+  <button type="submit" class="btn-register">REGISTER</button>
+</form>
+
         <a href="{{ url('/login') }}" class="link-register">Already have an account? Login here</a>
     </div>
 </body>

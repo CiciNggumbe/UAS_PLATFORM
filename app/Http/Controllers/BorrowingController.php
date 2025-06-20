@@ -2,14 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Peminjaman;
 use Illuminate\Http\Request;
+use App\Models\Borrowing;
 
-class PeminjamanController extends Controller
+class BorrowingController extends Controller
 {
-    public function riwayat()
+    public function create()
     {
-        $data = Peminjaman::all(); // ambil semua data dari tabel peminjamans
-       return view('riwayat-peminjaman', ['riwayat' => $data]);
+        return view('user.borrowing');
     }
-}
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'duration' => 'required|in:7,14,28,30',
+            'payment_method' => 'required|in:credit-card,bank-transfer,e-wallet',
+        ]);
+
+        Borrowing::create([
+            'duration' => $request->duration,
+            'payment_method' => $request->payment_method,
+        ]);
+
+        return redirect('/history')->with('success', 'Peminjaman berhasil diajukan!');
+    }
+
+    public function index()
+    {
+        $borrowings = Borrowing::latest()->get();
+        return view('history', compact('borrowings'));
+    }
+};

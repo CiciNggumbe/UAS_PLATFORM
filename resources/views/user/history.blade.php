@@ -90,46 +90,40 @@
       <a href="/logout">Log Out</a>
     </div>
 
-    <div class="main-content">
+     <div class="main-content">
       <h1>History</h1>
       <table>
-        <tr>
-          <th>Gambar</th>
-          <th>Nama Alat</th>
-          <th>Kategori</th>
-          <th>Harga</th>
-          <th>Durasi</th>
-          <th>Pembayaran</th>
-          <th>Status</th>
-        </tr>
-        <tr>
-          <td><img src="keyboard.jpg" alt="Keyboard Piano"></td>
-          <td>Keyboard Piano</td>
-          <td>Percussion</td>
-          <td>$10/day</td>
-          <td>5 days</td>
-          <td>Credit Card</td>
-          <td class="status-success">Delivered</td>
-        </tr>
-        <tr>
-          <td><img src="flute.jpg" alt="Flute"></td>
-          <td>Flute</td>
-          <td>Woodwind</td>
-          <td>$5/day</td>
-          <td>2 days</td>
-          <td>Credit Card</td>
-          <td class="status-success">Delivered</td>
-        </tr>
-        <tr>
-          <td><img src="saxophone.jpg" alt="Saxophone"></td>
-          <td>Saxophone</td>
-          <td>Woodwind</td>
-          <td>$75/day</td>
-          <td>1 day</td>
-          <td>Credit Card</td>
-          <td class="status-success">Delivered</td>
-        </tr>
-      </table>
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Price</th>
+      <th>Duration</th>
+      <th>Payment</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach ($borrowings as $borrow)
+    <tr>
+      <td>
+        @if($borrow->instrument && $borrow->instrument->image_path)
+          <img src="{{ asset('storage/' . $borrow->instrument->image_path) }}" alt="{{ $borrow->instrument->name }}">
+        @else
+          <img src="{{ asset('default.jpg') }}" alt="No image">
+        @endif
+      </td>
+      <td>{{ $borrow->instrument->name ?? '-' }}</td>
+      <td>{{ $borrow->instrument->type ?? '-' }}</td>
+      <td>${{ $borrow->instrument->price ?? '0' }}/day</td>
+      <td>{{ $borrow->duration }} days</td>
+      <td>{{ $borrow->payment_method }}</td>
+      <td class="status-success">Delivered</td>
+    </tr>
+    @endforeach
+  </tbody>
+</table>
     </div>
   </div>
 </body>

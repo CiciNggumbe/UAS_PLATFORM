@@ -5,6 +5,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\Borrowing;
 use App\Http\Controllers\BorrowingController;
+use App\Http\Controllers\RegisterController;
+use App\Models\User;
+use App\Http\Controllers\InstrumentController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\ReturnController;
 
 // ================= WELCOME ================= //
 Route::get('/', function () {
@@ -18,22 +25,28 @@ Route::get('/login', function () {
 
 // ================= HANDLE LOGIN ================= //
 Route::post('/login', function (Request $request) {
-    $username = $request->input('username');
-    $password = $request->input('password');
+    $credentials = $request->validate([
+        'username' => ['required', 'string'],
+        'password' => ['required'],
+    ]);
 
-    if ($username === 'admin' && $password === 'admin_p4ss') {
-        Session::put('username', $username);
+    // Admin login hardcoded (opsional)
+    if ($credentials['username'] === 'admin' && $credentials['password'] === 'admin_p4ss') {
+        Session::put('username', 'Admin');
         Session::put('role', 'admin');
         return redirect()->route('dashboard.admin');
     }
 
-    if ($username === 'user' && $password === 'user_p4ss') {
-        Session::put('username', $username);
+    // Cari user berdasarkan username (bukan email lagi)
+    $user = User::where('name', $credentials['username'])->first();
+
+    if ($user && Hash::check($credentials['password'], $user->password)) {
+        Session::put('username', $user->name);
         Session::put('role', 'user');
         return redirect()->route('user.dashboard');
     }
 
-    return redirect()->route('login')->with('error', 'Invalid credentials.');
+    return redirect()->route('login')->with('error', 'Username atau password salah.');
 })->name('login.process');
 
 // ================= LOGOUT ================= //
@@ -52,19 +65,11 @@ Route::middleware('web')->group(function () {
         return view('admin.dashboard_admin');
     })->name('dashboard.admin');
 
-    Route::get('/data-pengguna', function () {
-        if (Session::get('role') !== 'admin') {
-            return redirect()->route('login');
-        }
-        return view('admin.data_pengguna');
-    })->name('pengguna.index');
+    Route::get('/data-pengguna', [UserController::class, 'index'])->name('pengguna.index');
 
-    Route::get('/data-alatmusik', function () {
-        if (Session::get('role') !== 'admin') {
-            return redirect()->route('login');
-        }
-        return view('admin.data_alatmusik');
-    })->name('alatmusik.index');
+    Route::get('/data-alatmusik', [InstrumentController::class, 'index'])->name('alatmusik.index');
+    Route::post('/data-alatmusik', [InstrumentController::class, 'store'])->name('alatmusik.store');
+    Route::delete('/data-alatmusik/{id}', [InstrumentController::class, 'destroy'])->name('alatmusik.destroy');
 
     Route::get('/transaksi', function () {
         if (Session::get('role') !== 'admin') {
@@ -116,31 +121,38 @@ Route::middleware('web')->group(function () {
 Route::get('/register', function () {
     return view('register');
 });
+Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
-Route::get('/products', function () {
-   return view('user.products');
-});
+Route::get('/dashboard', function () {
+    return view('user.dashboard');
+})->name('user.dashboard');
 
-Route::get('/history', function () {
-   return view('user.history');
-});
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
-Route::get('/borrowing', function () {
-   return view('user.borrowing');
-});
+// (Opsional) Halaman detail produk
+Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
-Route::get('/return', function () {
-   return view('user.return');
-});
+Route::get('/history', [App\Http\Controllers\HistoryController::class, 'index'])->name('history.index');
+
+Route::get('/borrowing', [BorrowingController::class, 'create']);
+Route::post('/borrowing/store', [BorrowingController::class, 'store'])->name('borrowing.store');
+
+Route::get('/return', [ReturnController::class, 'index'])->name('return.index');
+Route::post('/return/{id}', [ReturnController::class, 'process'])->name('return.process');
+
 
 Route::get('/logout', function () {
-   return view('user.logout');
+    return view('user.logout');
 });
 
 Route::get('/profile', function () {
-   return view('user.profile');
+    return view('user.profile');
 });
 
 Route::get('/settings', function () {
-   return view('user.settings');
+    return view('user.settings');
+});
+
+Route::get('/productdetail', function () {
+    return view('user.productdetail');
 });

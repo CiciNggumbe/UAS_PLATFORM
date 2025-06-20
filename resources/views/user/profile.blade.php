@@ -126,9 +126,9 @@
       <h2>PuspaNada<br>Online Instrument<br>Rental Service</h2>
       <a href="/dashboard">Home</a>
       <a href="/products">Products</a>
-      <a href="/history.html">History</a>
-      <a href="/borrowing.html">Borrowing</a>
-      <a href="/return.html">Return</a>
+      <a href="/history">History</a>
+      <a href="/borrowing">Borrowing</a>
+      <a href="/return">Return</a>
       <a href="/profile" class="active">Profile</a>
       <a href="/settings">Settings</a>
       <a href="/logout">Log Out</a>
@@ -161,7 +161,7 @@
         </div>
         <div class="btn-group">
           <a href="/edit-profile.html" class="btn">Edit Profile</a>
-          <a href="/logout.html" class="btn">Log Out</a>
+          <a href="/logout" class="btn">Log Out</a>
         </div>
       </div>
     </div>

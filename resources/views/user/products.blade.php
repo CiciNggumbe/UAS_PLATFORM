@@ -9,7 +9,7 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #fffaf0;
+      background: #ffe5b4;
       color: #333;
     }
     .container {
@@ -41,27 +41,68 @@
       padding: 20px;
     }
     .product-card {
-      background: white;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      overflow: hidden;
-      width: 200px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
+  position: relative;
+  width: 200px;
+  height: 300px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+  background-color: #000;
+}
+.product-card:hover {
+  transform: translateY(-5px);
+}
     .product-card img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-    }
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
     .product-card .info {
-      padding: 10px;
-    }
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  z-index: 2;
+}
+
+.product-card .info h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.product-card .info p {
+  margin: 3px 0 0 0;
+  font-size: 13px;
+}
+
+.product-card .price {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: black;
+  color: white;
+  padding: 4px 8px;
+  font-size: 13px;
+  border-radius: 8px;
+  z-index: 2;
+}
     .product-grid {
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
     }
+    .product-card .gradient-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 45%;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+}
+
   </style>
 </head>
 <body>
@@ -89,107 +130,19 @@
   font-size: 14px;
   outline: none;
 ">
-      <div class="product-grid">
-        <div class="product-card">
-          <img src="guitar.jpg" alt="Guitar" />
-          <div class="info">
-            <h3>Guitar</h3>
-            <p>$15/day</p>
-          </div>
-        </div>
-        <div class="product-card">
-          <img src="violin.jpg" alt="Violin" />
-          <div class="info">
-            <h3>Violin</h3>
-            <p>$100/day</p>
-          </div>
-</div>
-<div class="product-card">
-  <img src="piano.jpg" alt="Piano" />
+<div class="product-grid">
+  @foreach($instruments as $instrument)
+<div class="product-card" onclick="location.href='{{ route('products.show', $instrument->id) }}'">
+  <img src="{{ asset('storage/' . $instrument->image_path) }}" alt="{{ $instrument->name }}" />
+  <div class="gradient-overlay"></div>
   <div class="info">
-    <h3>Piano</h3>
-    <p>$120/day</p>
+    <h3>{{ $instrument->name }}</h3>
+    <p>${{ $instrument->price }}/day</p>
   </div>
 </div>
-<div class="product-card">
-  <img src="drum.jpg" alt="Drum Set" />
-  <div class="info">
-    <h3>Drum Set</h3>
-    <p>$25/day</p>
-  </div>
+@endforeach
+
 </div>
-<div class="product-card">
-  <img src="flute.jpg" alt="Flute" />
-  <div class="info">
-    <h3>Flute</h3>
-    <p>$10/day</p>
-  </div>
-</div>
-<div class="product-card">
-  <img src="saxophone.jpg" alt="Saxophone" />
-  <div class="info">
-    <h3>Saxophone</h3>
-    <p>$75/day</p>
-  </div>
-</div>
-<div class="product-card">
-  <img src="keyboard.jpg" alt="Keyboard" />
-  <div class="info">
-    <h3>Keyboard</h3>
-    <p>$20/day</p>
-  </div>
-</div>
-<div class="product-card">
-  <img src="harp.jpg" alt="Harp" />
-  <div class="info">
-    <h3>Harp</h3>
-    <p>$150/day</p>
-  </div>
-</div>
-<div class="product-card">
-  <img src="gamelan.jpg" alt="Gamelan" />
-  <div class="info">
-    <h3>Gamelan</h3>
-    <p>$35/day</p>
-  </div>
-</div>
-<div class="product-card">
-  <img src="angklung.jpg" alt="Angklung" />
-  <div class="info">
-    <h3>Angklung</h3>
-    <p>$8/day</p>
-  </div>
-</div>
-<div class="product-card">
-  <img src="trumpet.jpg" alt="Trumpet" />
-  <div class="info">
-    <h3>Trumpet</h3>
-    <p>$18/day</p>
-  </div>
-</div>
-<div class="product-card">
-  <img src="cello.jpg" alt="Cello" />
-  <div class="info">
-    <h3>Cello</h3>
-    <p>$90/day</p>
-  </div>
-</div>
-<div class="product-card">
-  <img src="clarinet.jpg" alt="Clarinet" />
-  <div class="info">
-    <h3>Clarinet</h3>
-    <p>$22/day</p>
-  </div>
-</div>
-<div class="product-card">
-  <img src="tambourine.jpg" alt="Tambourine" />
-  <div class="info">
-    <h3>Tambourine</h3>
-    <p>$5/day</p>
-  </div>
-</div>
-    </div>
-  </div>
 <script>
     const searchInput = document.getElementById("searchInput");
     const cards = document.querySelectorAll(".product-card");

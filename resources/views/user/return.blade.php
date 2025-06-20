@@ -109,9 +109,9 @@
       <h2>PuspaNada<br>Online Instrument<br>Rental Service</h2>
       <a href="/dashboard">Home</a>
       <a href="/products">Products</a>
-      <a href="/history.html">History</a>
-      <a href="/borrowing.html">Borrowing</a>
-      <a href="/return.html" class="active">Return</a>
+      <a href="/history">History</a>
+      <a href="/borrowing">Borrowing</a>
+      <a href="/return" class="active">Return</a>
       <a href="/profile">Profile</a>
       <a href="/settings">Settings</a>
       <a href="/logout">Log Out</a>
@@ -134,31 +134,34 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Keyboard Piano</td>
-            <td>Percussion</td>
-            <td>10 June 2025</td>
-            <td>15 June 2025</td>
-            <td><span class="status returned">Returned</span></td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <td>Flute</td>
-            <td>Woodwind</td>
-            <td>17 June 2025</td>
-            <td>19 June 2025</td>
-            <td><span class="status.pending">Pending</span></td>
-            <td><button class="btn-return">Return Now</button></td>
-          </tr>
-          <tr>
-            <td>Saxophone</td>
-            <td>Woodwind</td>
-            <td>18 June 2025</td>
-            <td>19 June 2025</td>
-            <td><span class="status.pending">Pending</span></td>
-            <td><button class="btn-return">Return Now</button></td>
-          </tr>
-        </tbody>
+  @forelse ($borrowings as $borrow)
+    <tr>
+      <td>{{ $borrow->instrument->name ?? '-' }}</td>
+      <td>{{ $borrow->instrument->type ?? '-' }}</td>
+      <td>{{ $borrow->start_date }}</td>
+      <td>{{ $borrow->due_date ?? \Carbon\Carbon::parse($borrow->start_date)->addDays($borrow->duration)->format('d M Y') }}</td>
+      <td>
+        <span class="status {{ $borrow->return_status == 'returned' ? 'returned' : 'pending' }}">
+          {{ ucfirst($borrow->return_status) }}
+        </span>
+      </td>
+      <td>
+        @if ($borrow->return_status == 'pending')
+          <form action="{{ route('user.return.process', $borrow->id) }}" method="POST">
+            @csrf
+            <button type="submit" class="btn-return">Return Now</button>
+          </form>
+        @else
+          -
+        @endif
+      </td>
+    </tr>
+  @empty
+    <tr>
+      <td colspan="6" style="text-align: center;">No items to return</td>
+    </tr>
+  @endforelse
+</tbody>
       </table>
     </div>
   </div>

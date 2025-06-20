@@ -80,10 +80,19 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td colspan="4" class="empty-message">No user data available.</td>
-        </tr>
-      </tbody>
+  @forelse ($users as $index => $user)
+    <tr>
+      <td>{{ $index + 1 }}</td>
+      <td>{{ $user->name }}</td>
+      <td>{{ $user->email }}</td>
+      <td>{{ $user->phone ?? '-' }}</td>
+    </tr>
+  @empty
+    <tr>
+      <td colspan="4" class="empty-message">No user data available.</td>
+    </tr>
+  @endforelse
+</tbody>
     </table>
 
     <a href="{{ route('dashboard.admin') }}" class="btn-back">Back to Dashboard</a>

@@ -43,14 +43,14 @@
         }
 
         input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 2px solid orange;
-            border-radius: 4px;
-            font-size: 14px;
-        }
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 2px solid orange;
+    border-radius: 4px;
+    font-size: 14px;
+}
 
         .btn-login {
             background-color: #d35400;
@@ -96,11 +96,11 @@
         @endif
 
         <form method="POST" action="{{ route('login.process') }}">
-            @csrf
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit" class="btn-login">LOGIN</button>
-        </form>
+    @csrf
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <button type="submit" class="btn-login">LOGIN</button>
+</form>
 
         <a href="{{ url('/register') }}" class="link-register">Don't have an account? Register here</a>
 

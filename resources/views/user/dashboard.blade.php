@@ -352,7 +352,7 @@ transition: transform 0.3s ease, box-shadow 0.3s ease;
       <a href="/dashboard" class="active">Home</a>
       <a href="/products">Products</a>
       <a href="/history">History</a>
-      <a href="/borrowing.">Borrowing</a>
+      <a href="/borrowing">Borrowing</a>
       <a href="/return">Return</a>
       <a href="/profile">Profile</a>
       <a href="/settings">Settings</a>
